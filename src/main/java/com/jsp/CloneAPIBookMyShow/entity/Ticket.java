@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.jsp.CloneAPIBookMyShow.enums.TicketStatus;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,17 +20,18 @@ import lombok.Setter;
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private long ticketId;
-private double totalPrice;
+	private long ticketId;
+	private double totalPrice;
 //TicketStatus
+	private TicketStatus ticketStatus;
 
-@ManyToOne
-private Show show;
+	@ManyToOne
+	private MoviewShow moviewShow;
 
-@OneToMany
-private List<Booking>  bookings;
+	@OneToMany
+	private List<Booking> bookings;
 
-@ManyToOne
-private Customer  customer;
+	@ManyToOne
+	private Customer customer;
 
 }

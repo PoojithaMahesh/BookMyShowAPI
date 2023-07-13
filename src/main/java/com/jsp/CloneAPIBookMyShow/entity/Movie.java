@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.jsp.CloneAPIBookMyShow.enums.Genre;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +22,9 @@ public class Movie {
 	private long movieId;
 	private String movieName;
 //	genresss
+	private Genre genre1;
+	private Genre genre2;
+	private Genre genre3;
 	private LocalDateTime movieDuration;
 	private String moviedescription;
 	private String language;

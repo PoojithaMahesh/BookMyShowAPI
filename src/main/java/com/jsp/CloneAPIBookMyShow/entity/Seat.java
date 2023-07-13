@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.jsp.CloneAPIBookMyShow.enums.SeatType;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +17,9 @@ import lombok.Setter;
 public class Seat {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private long seatId;
+	private long seatId;
 //SeatType
-@ManyToOne
-private Screen  screen;
+	private SeatType seatType;
+	@ManyToOne
+	private Screen screen;
 }
-
