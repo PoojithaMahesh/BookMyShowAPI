@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jsp.CloneAPIBookMyShow.dao.OwnerDao;
 import com.jsp.CloneAPIBookMyShow.dto.OwnerDto;
 import com.jsp.CloneAPIBookMyShow.entity.Owner;
+import com.jsp.CloneAPIBookMyShow.exception.OwnerIdNotFoundException;
 import com.jsp.CloneAPIBookMyShow.util.ResponseStructure;
 @Service
 public class OwnerService {
@@ -44,7 +45,7 @@ public class OwnerService {
 			return new ResponseEntity<ResponseStructure<OwnerDto>>(structure,HttpStatus.FOUND);
 		}else {
 //			raise ownerIdnot found exception
-			return null;
+			throw new OwnerIdNotFoundException("Sorry failed to fetch owner");
 		}
 	}
 	public ResponseEntity<ResponseStructure<OwnerDto>> deleteOwnerById(long ownerId) {
@@ -63,7 +64,7 @@ public class OwnerService {
 			return new ResponseEntity<ResponseStructure<OwnerDto>>(structure,HttpStatus.FOUND);
 		}else {
 //			raise ownerIdnot found exception
-			return null;
+		throw new OwnerIdNotFoundException("sorry failed to delete the owner");
 		}
 	
 	}
@@ -82,7 +83,7 @@ public class OwnerService {
 			return new ResponseEntity<ResponseStructure<OwnerDto>>(structure,HttpStatus.OK);
 		}else {
 //			raise ownerIdnot found exception
-			return null;
+			throw new OwnerIdNotFoundException("Sorry Failed to update owner");
 		}
 	
 	}

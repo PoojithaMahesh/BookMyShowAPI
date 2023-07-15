@@ -1,5 +1,8 @@
 package com.jsp.CloneAPIBookMyShow.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,8 @@ import com.jsp.CloneAPIBookMyShow.dao.ProductionHouseDao;
 import com.jsp.CloneAPIBookMyShow.dto.ProductionHouseDto;
 import com.jsp.CloneAPIBookMyShow.entity.Owner;
 import com.jsp.CloneAPIBookMyShow.entity.ProductionHouse;
+import com.jsp.CloneAPIBookMyShow.exception.OwnerIdNotFoundException;
+import com.jsp.CloneAPIBookMyShow.exception.ProductionHouseIdNotFoundException;
 import com.jsp.CloneAPIBookMyShow.util.ResponseStructure;
 
 @Service
@@ -26,9 +31,21 @@ public class ProductionHouseService {
 	
 	public ResponseEntity<ResponseStructure<ProductionHouse>> saveProductionHouse(long ownerId, ProductionHouseDto houseDto){
 		Owner dbOwner=ownerDao.fineOwnerById(ownerId);
-		if(dbOwner!=null) {
-         ProductionHouse house=this.modelMapper.map(houseDto, ProductionHouse.class);
-         house.setOwner(dbOwner);
+		if(dbOwner!=null) {	
+		  ProductionHouse house=this.modelMapper.map(houseDto, ProductionHouse.class);
+     	if(dbOwner.getHouses().isEmpty()) {
+			List<ProductionHouse> list=new ArrayList<ProductionHouse>();
+			list.add(house);
+			dbOwner.setHouses(list);	
+		}else {
+			List<ProductionHouse> list=dbOwner.getHouses();
+			list.add(house);
+			dbOwner.setHouses(list);
+		
+		}
+     
+        house.setOwner(dbOwner);
+         
         ProductionHouse dbProductionHouse= houseDao.saveProductionHouse(house);
         ResponseStructure<ProductionHouse> structure=new ResponseStructure<ProductionHouse>();
         structure.setMessage("ProductionHouse Added Successfully");
@@ -38,9 +55,40 @@ public class ProductionHouseService {
 			
 		}else {
 //			Raise one exception ownerIdisnot present
-			return null;
+			throw new OwnerIdNotFoundException("Sorry failed to add productionHouse");
 		}
 	}
+	
+	
+
+	public ResponseEntity<ResponseStructure<ProductionHouse>> updateProductionHouse(long houseId,
+			ProductionHouseDto houseDto) {
+		ProductionHouse house=this.modelMapper.map(houseDto, ProductionHouse.class);
+		
+		ProductionHouse dbHouse=houseDao.updateProductionHouse(houseId,house);
+		if(dbHouse!=null) {
+			ResponseStructure<ProductionHouse> structure=new ResponseStructure<ProductionHouse>();
+			structure.setMessage("ProductionHouse Update successfully");
+			structure.setStatus(HttpStatus.OK.value());
+			structure.setData(dbHouse);
+			return new ResponseEntity<ResponseStructure<ProductionHouse>>(structure,HttpStatus.OK);
+		}else {
+			throw new  ProductionHouseIdNotFoundException("Sorry failed to update ProductionHouse");
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

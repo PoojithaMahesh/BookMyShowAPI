@@ -3,6 +3,7 @@ package com.jsp.CloneAPIBookMyShow.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,4 +24,9 @@ public class ProductionHouseController {
 	public ResponseEntity<ResponseStructure<ProductionHouse>> saveProsuctionHouse(@RequestParam long ownerId,@RequestBody ProductionHouseDto houseDto){
 		return service.saveProductionHouse(ownerId,houseDto);
 	}
+	@PutMapping
+	public ResponseEntity<ResponseStructure<ProductionHouse>> updateProductionHouse(@RequestParam long houseId,@RequestBody ProductionHouseDto houseDto){
+		return service.updateProductionHouse(houseId,houseDto);
+	}
+	
 }
