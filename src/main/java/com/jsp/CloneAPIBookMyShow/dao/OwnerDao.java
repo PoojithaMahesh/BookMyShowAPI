@@ -27,4 +27,23 @@ public class OwnerDao {
 		return null;
 	}
 
+	public Owner deleteOwnerById(long ownerId) {
+		Optional<Owner>  optional=repo.findById(ownerId);
+		if(optional.isPresent()) {
+			repo.deleteById(ownerId);
+			return optional.get();
+		}
+		return null;
+	}
+
+	public Owner upadateOwner(long ownerId, Owner owner) {
+		Optional<Owner>  optional=repo.findById(ownerId);
+		if(optional.isPresent()) {
+			owner.setOwnerId(ownerId);
+			repo.save(owner);
+			return owner;
+		}
+		return null;
+	}
+
 }

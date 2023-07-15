@@ -47,5 +47,44 @@ public class OwnerService {
 			return null;
 		}
 	}
+	public ResponseEntity<ResponseStructure<OwnerDto>> deleteOwnerById(long ownerId) {
+		Owner dbOwner=ownerDao.deleteOwnerById(ownerId);
+		if(dbOwner!=null) {
+			OwnerDto dto=new OwnerDto();
+			dto.setOwnerId(dbOwner.getOwnerId());
+			dto.setOwnerName(dbOwner.getOwnerName());
+			dto.setOwnerEmail(dbOwner.getOwnerEmail());
+			dto.setOwnerPhoneNumber(dbOwner.getOwnerPhoneNumber());
+			
+			ResponseStructure<OwnerDto> structure=new ResponseStructure<OwnerDto>();
+			structure.setMessage("OwnerData Deleted successfully");
+			structure.setStatus(HttpStatus.FOUND.value());
+			structure.setData(dto);
+			return new ResponseEntity<ResponseStructure<OwnerDto>>(structure,HttpStatus.FOUND);
+		}else {
+//			raise ownerIdnot found exception
+			return null;
+		}
+	
+	}
+	public ResponseEntity<ResponseStructure<OwnerDto>> updateOwner(long ownerId, Owner owner) {
+		Owner dbOwner=ownerDao.upadateOwner(ownerId,owner);
+		if(dbOwner!=null) {
+			OwnerDto dto=new OwnerDto();
+			dto.setOwnerId(dbOwner.getOwnerId());
+			dto.setOwnerName(dbOwner.getOwnerName());
+			dto.setOwnerEmail(dbOwner.getOwnerEmail());
+			dto.setOwnerPhoneNumber(dbOwner.getOwnerPhoneNumber());
+			ResponseStructure<OwnerDto> structure=new ResponseStructure<OwnerDto>();
+			structure.setMessage("OwnerData updated successfully");
+			structure.setStatus(HttpStatus.OK.value());
+			structure.setData(dto);
+			return new ResponseEntity<ResponseStructure<OwnerDto>>(structure,HttpStatus.OK);
+		}else {
+//			raise ownerIdnot found exception
+			return null;
+		}
+	
+	}
 
 }
