@@ -32,4 +32,27 @@ public class ProductionHouseDao {
 		
 		return null;
 	}
+
+	public ProductionHouse getProductionHouseById(long houseId) {
+		Optional<ProductionHouse> optional=repo.findById(houseId);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
+
+	public ProductionHouse deleteProductionHouseById(long houseId) {
+		Optional<ProductionHouse> optional=repo.findById(houseId);
+		if(optional.isPresent()) {
+		ProductionHouse house=optional.get();
+		
+		house.setOwner(null);
+		house.setMovies(null);
+		
+		repo.delete(house);
+		return optional.get();
+		
+		}
+		return null;
+	}
 }

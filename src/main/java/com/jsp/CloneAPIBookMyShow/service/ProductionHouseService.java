@@ -31,8 +31,11 @@ public class ProductionHouseService {
 	
 	public ResponseEntity<ResponseStructure<ProductionHouse>> saveProductionHouse(long ownerId, ProductionHouseDto houseDto){
 		Owner dbOwner=ownerDao.fineOwnerById(ownerId);
+		
+		
 		if(dbOwner!=null) {	
 		  ProductionHouse house=this.modelMapper.map(houseDto, ProductionHouse.class);
+		  
      	if(dbOwner.getHouses().isEmpty()) {
 			List<ProductionHouse> list=new ArrayList<ProductionHouse>();
 			list.add(house);
@@ -43,9 +46,7 @@ public class ProductionHouseService {
 			dbOwner.setHouses(list);
 		
 		}
-     
         house.setOwner(dbOwner);
-         
         ProductionHouse dbProductionHouse= houseDao.saveProductionHouse(house);
         ResponseStructure<ProductionHouse> structure=new ResponseStructure<ProductionHouse>();
         structure.setMessage("ProductionHouse Added Successfully");
@@ -74,6 +75,36 @@ public class ProductionHouseService {
 			return new ResponseEntity<ResponseStructure<ProductionHouse>>(structure,HttpStatus.OK);
 		}else {
 			throw new  ProductionHouseIdNotFoundException("Sorry failed to update ProductionHouse");
+		}
+	}
+
+
+
+	public ResponseEntity<ResponseStructure<ProductionHouse>> getProductionHouseById(long houseId) {
+		ProductionHouse dbHouse=houseDao.getProductionHouseById(houseId);
+		if(dbHouse!=null) {
+			ResponseStructure<ProductionHouse> structure=new ResponseStructure<ProductionHouse>();
+			structure.setMessage("ProductionHousedata fetched successfully");
+			structure.setStatus(HttpStatus.FOUND.value());
+			structure.setData(dbHouse);
+			return new ResponseEntity<ResponseStructure<ProductionHouse>>(structure,HttpStatus.FOUND);
+		}else {
+			throw new  ProductionHouseIdNotFoundException("Sorry failed to fetch ProductionHouse");
+		}
+	}
+
+
+
+	public ResponseEntity<ResponseStructure<ProductionHouse>> deleteProductionHouseById(long houseId) {
+		ProductionHouse dbHouse=houseDao.deleteProductionHouseById(houseId);
+		if(dbHouse!=null) {
+			ResponseStructure<ProductionHouse> structure=new ResponseStructure<ProductionHouse>();
+			structure.setMessage("ProductionHousedata Deleted successfully");
+			structure.setStatus(HttpStatus.FOUND.value());
+			structure.setData(dbHouse);
+			return new ResponseEntity<ResponseStructure<ProductionHouse>>(structure,HttpStatus.FOUND);
+		}else {
+			throw new  ProductionHouseIdNotFoundException("Sorry failed to delete ProductionHouse");
 		}
 	}
 	

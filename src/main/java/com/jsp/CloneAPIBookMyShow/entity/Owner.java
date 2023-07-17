@@ -26,7 +26,7 @@ public class Owner {
 	private String ownerEmail;
 	private String ownerPassword;
 
-	@OneToMany
+	@OneToMany(mappedBy = "owner")
 	@JsonIgnore
 	private List<ProductionHouse> houses;
 

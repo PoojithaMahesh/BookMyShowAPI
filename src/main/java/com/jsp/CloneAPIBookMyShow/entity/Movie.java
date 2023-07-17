@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jsp.CloneAPIBookMyShow.enums.Genre;
 
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Movie {
 	private String moviedescription;
 	private String language;
 	@ManyToOne
+	@JsonIgnore
 	private ProductionHouse productionHouse;
 	
 }

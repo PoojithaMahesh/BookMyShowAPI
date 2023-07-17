@@ -24,7 +24,7 @@ public class Address {
 	private String country;
 	private long pincode;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "address")
 	private Theatre theatre;
 	
 }
