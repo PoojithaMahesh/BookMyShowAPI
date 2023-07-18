@@ -2,6 +2,7 @@ package com.jsp.CloneAPIBookMyShow.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,11 @@ public class AddressService {
 	public ResponseEntity<ResponseStructure<Address>> saveAddress(AddressDto addressDto) {
 		Address address=this.modelMapper.map(addressDto, Address.class);
 		Address dbAddress=addressDao.saveAddress(address);
-		
-		return null;
+		ResponseStructure<Address> structure=new ResponseStructure<Address>();
+		structure.setMessage("address saved successfully");
+		structure.setStatus(HttpStatus.CREATED.value());
+		structure.setData(dbAddress);
+		return new ResponseEntity<ResponseStructure<Address>>(structure,HttpStatus.CREATED);
 	}
 	
 }

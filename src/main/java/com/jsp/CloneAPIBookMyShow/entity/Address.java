@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +27,7 @@ public class Address {
 	private long pincode;
 	
 	@OneToOne(mappedBy = "address")
+	@JsonIgnore
 	private Theatre theatre;
 	
 }

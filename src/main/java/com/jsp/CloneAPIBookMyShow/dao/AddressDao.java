@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jsp.CloneAPIBookMyShow.entity.Address;
-import com.jsp.CloneAPIBookMyShow.reposiory.AddressRepo;
+import com.jsp.CloneAPIBookMyShow.repository.AddressRepo;
 
 @Repository
 public class AddressDao {
@@ -42,4 +42,5 @@ public class AddressDao {
 		}
 		return null;
 	}
+
 }

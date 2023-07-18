@@ -1,4 +1,4 @@
-package com.jsp.CloneAPIBookMyShow.reposiory;
+package com.jsp.CloneAPIBookMyShow.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

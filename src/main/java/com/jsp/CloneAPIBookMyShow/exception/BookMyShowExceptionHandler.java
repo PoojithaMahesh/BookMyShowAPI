@@ -19,6 +19,14 @@ public class BookMyShowExceptionHandler extends ResponseEntityExceptionHandler{
 		structure.setData(ex.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> theatreIdNoTFound(TheatreIdNotFoundException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Id NOt Found for Theatre");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
 	
 	@ExceptionHandler
 	public ResponseEntity<ResponseStructure<String>> houseIdNoTFound(ProductionHouseIdNotFoundException ex){
@@ -28,5 +36,20 @@ public class BookMyShowExceptionHandler extends ResponseEntityExceptionHandler{
 		structure.setData(ex.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
-	
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> addressIdNoTFound(AddressIdNotFoundException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Id NOt Found for Address");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> TheatrealreadyexistNoTFound(TheatreAlreadyPresentInThisAddressException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Theatre already present in this address");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
 }

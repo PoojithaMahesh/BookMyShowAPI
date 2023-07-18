@@ -30,7 +30,8 @@ public class Owner {
 	@JsonIgnore
 	private List<ProductionHouse> houses;
 
-	@OneToMany
+	@OneToMany(mappedBy = "owner")
+	@JsonIgnore
 	private List<Theatre> theatres;
 
 }
