@@ -31,4 +31,27 @@ public class TheatreDao {
 		return theatre;
 	}return null;
 	}
+
+	public Theatre getTheatreById(long theatreId) {
+		Optional< Theatre> optional=repo.findById(theatreId);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
+	
+	public Theatre deleteTheatreById(long theatreId) {
+		Optional<Theatre> optional=repo.findById(theatreId);
+		if(optional.isPresent()) {
+			Theatre theatre=optional.get();
+			theatre.setOwner(null);
+			theatre.setAddress(null);
+			theatre.setScreen(null);
+			theatre.setMoviewShows(null);
+			repo.delete(theatre);
+			
+			return optional.get();
+		}
+		return null;
+	}
 }

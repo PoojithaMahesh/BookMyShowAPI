@@ -2,6 +2,8 @@ package com.jsp.CloneAPIBookMyShow.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,5 +32,12 @@ public class TheatreController {
 	public ResponseEntity<ResponseStructure<Theatre>> updateTheatre(@RequestParam long theatreId,@RequestBody TheatreDto theatreDto){
 		return service.updateTheatre(theatreId,theatreDto);
 	}
-	
+	@GetMapping
+	public ResponseEntity<ResponseStructure<Theatre>> getTheatre(@RequestParam long theatreId){
+		return service.getTheatreById(theatreId);
+	}
+	@DeleteMapping
+	public ResponseEntity<ResponseStructure<Theatre>> deleteTheatre(@RequestParam long theatreId){
+		return service.deleteTheatreById(theatreId);
+	}
 }

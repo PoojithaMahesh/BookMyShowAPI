@@ -21,6 +21,7 @@ public class AddressDao {
 		Optional<Address> optional =repo.findById(addressId);
 		if(optional.isPresent()) {
 			address.setAddressId(addressId);
+			address.setTheatre(optional.get().getTheatre());
 			repo.save(address);
 			return address;
 		}
