@@ -2,6 +2,7 @@ package com.jsp.CloneAPIBookMyShow.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,12 +33,13 @@ public class Screen {
 	private ScreenStatus status;
 	
 	
-	@OneToMany
+	@OneToMany(mappedBy = "screen",cascade = CascadeType.ALL)
 	private List<Seat> seats;
 	private int noOfClassicSeat;
 	private int noOfPlatinumSeat;
 	private int noOfGoldSeat;
-	
+		
+
 	@ManyToOne
 	private Theatre theatre;
 
