@@ -20,6 +20,15 @@ public class BookMyShowExceptionHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> ScreenIdNoTFound(ScreenIdNotFoundException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Id NOt Found for Screen");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler
 	public ResponseEntity<ResponseStructure<String>> theatreIdNoTFound(TheatreIdNotFoundException ex){
 		ResponseStructure<String>  structure=new ResponseStructure<String>();
 		structure.setMessage("Id NOt Found for Theatre");
