@@ -21,7 +21,6 @@ public class MoviewShow {
 	private long id;
 	private LocalDateTime showStartTime;
 	private LocalDateTime showEndTime;
-//	showstatus
 	private ShowStatus showStatus;
 	private  String showLocation;
 	

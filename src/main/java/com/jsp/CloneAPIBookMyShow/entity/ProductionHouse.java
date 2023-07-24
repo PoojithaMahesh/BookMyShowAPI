@@ -29,7 +29,7 @@ public class ProductionHouse {
 	@JoinColumn
 	private Owner owner;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "productionHouse")
 	private List<Movie> movies;
 	
 	

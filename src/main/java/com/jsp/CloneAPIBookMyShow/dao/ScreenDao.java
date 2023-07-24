@@ -39,10 +39,7 @@ public class ScreenDao {
 		Optional<Screen> optional=screenRepo.findById(screenId);
 		if(optional.isPresent()) {
 			Screen screen=optional.get();
-			Theatre theatre=screen.getTheatre();
-			theatre.setScreen(null);
 			screen.setTheatre(null);
-			
 			screenRepo.delete(screen);
 			return screen;
 		}
