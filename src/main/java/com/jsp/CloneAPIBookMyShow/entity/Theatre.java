@@ -37,7 +37,7 @@ public class Theatre {
 	@JoinColumn
 	private Owner owner;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "theatre")
 	private List<MoviewShow> moviewShows;
 	
 	

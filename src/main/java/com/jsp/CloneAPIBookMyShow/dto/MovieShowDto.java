@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MovieShowDto {
-	private long showId;
+	private long id;
 	private LocalDateTime showStartTime;
 	private LocalDateTime showEndTime;
 //	showstatus

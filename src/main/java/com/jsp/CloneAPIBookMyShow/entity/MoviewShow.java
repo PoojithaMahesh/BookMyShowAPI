@@ -1,11 +1,13 @@
 package com.jsp.CloneAPIBookMyShow.entity;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.jsp.CloneAPIBookMyShow.enums.ShowStatus;
@@ -28,7 +30,7 @@ public class MoviewShow {
 	private long movieId;
 	private String movieName;
     private String genre;
-	private LocalDateTime movieDuration;
+	private LocalTime movieDuration;
 	private String movieDescription;
 	private String movieLanguage;
 	
@@ -39,6 +41,7 @@ public class MoviewShow {
 	private double premiumSeatPrice;
 
 	@ManyToOne
+	@JoinColumn
 	private Theatre theatre;
 	
 
