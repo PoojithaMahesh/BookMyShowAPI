@@ -36,9 +36,25 @@ public class BookMyShowExceptionHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> SeatIdNoTFound(SeatIdNotFoundEXception ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Id NOt Found for Seat");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
 	public ResponseEntity<ResponseStructure<String>> ScreenAlreadyAllotted(ScreenAlreadyAlloted ex){
 		ResponseStructure<String>  structure=new ResponseStructure<String>();
 		structure.setMessage("Screen may be alloted to other shows");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> ScreenisnotActive(ShowIsNotActiveException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Show is not active in this time");
 		structure.setStatus(HttpStatus.NOT_FOUND.value());
 		structure.setData(ex.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
