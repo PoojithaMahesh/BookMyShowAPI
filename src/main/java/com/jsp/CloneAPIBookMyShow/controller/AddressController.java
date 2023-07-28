@@ -1,5 +1,7 @@
 package com.jsp.CloneAPIBookMyShow.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +27,7 @@ public class AddressController {
 	private AddressService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Address>> saveAddress(@RequestBody AddressDto addressDto){
+	public ResponseEntity<ResponseStructure<Address>> saveAddress(@Valid @RequestBody AddressDto addressDto){
 		return service.saveAddress(addressDto);
 	}
 	@PutMapping

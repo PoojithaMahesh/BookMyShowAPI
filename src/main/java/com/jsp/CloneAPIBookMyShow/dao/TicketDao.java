@@ -16,4 +16,11 @@ public Ticket saveTticket(Ticket ticket) {
 	return repo.save(ticket);
 }
 
+public Ticket getTicketById(long ticketId) {
+	if(repo.findById(ticketId).isPresent()) {
+		return repo.findById(ticketId).get();
+	}
+	return null;
+}
+
 }

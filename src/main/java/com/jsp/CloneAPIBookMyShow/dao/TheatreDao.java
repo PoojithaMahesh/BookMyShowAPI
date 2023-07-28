@@ -1,10 +1,12 @@
 package com.jsp.CloneAPIBookMyShow.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.jsp.CloneAPIBookMyShow.entity.MoviewShow;
 import com.jsp.CloneAPIBookMyShow.entity.Theatre;
 import com.jsp.CloneAPIBookMyShow.repository.TheatreRepo;
 
@@ -46,9 +48,11 @@ public class TheatreDao {
 			Theatre theatre=optional.get();
 			theatre.setOwner(null);
 			theatre.setAddress(null);
-			theatre.setMoviewShows(null);
-			repo.delete(theatre);
-			
+			List<MoviewShow> list=optional.get().getMoviewShows();
+			for(MoviewShow show:list) {
+				show.setTheatre(null);
+			}
+			repo.deleteById(theatreId);
 			return optional.get();
 		}
 		return null;

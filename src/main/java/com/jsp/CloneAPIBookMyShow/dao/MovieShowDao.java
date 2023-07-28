@@ -42,7 +42,6 @@ public class MovieShowDao {
 		Optional<MoviewShow> optional=repo.findById(showId);
 		if(optional.isPresent()) {
 			MoviewShow moviewShow=optional.get();
-			moviewShow.setTheatre(null);
 			repo.delete(moviewShow);
 			return optional.get();
 		}

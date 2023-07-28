@@ -26,6 +26,10 @@ import com.jsp.CloneAPIBookMyShow.exception.CustomerIdNotFoundException;
 import com.jsp.CloneAPIBookMyShow.exception.SeatIdNotFoundEXception;
 import com.jsp.CloneAPIBookMyShow.exception.ShowIdNOtFoundException;
 import com.jsp.CloneAPIBookMyShow.exception.ShowIsNotActiveException;
+import com.jsp.CloneAPIBookMyShow.exception.TicketAlreadyCancelledException;
+import com.jsp.CloneAPIBookMyShow.exception.TicketAlreadyExpiredException;
+import com.jsp.CloneAPIBookMyShow.exception.TicketCannotBeCancelledEXception;
+import com.jsp.CloneAPIBookMyShow.exception.TicketIdNotFoundException;
 import com.jsp.CloneAPIBookMyShow.util.ResponseStructure;
 
 @Service
@@ -108,17 +112,37 @@ if(dbSeat!=null) {
 }else {
 	throw new SeatIdNotFoundEXception("sorry failed to book ticket");
 }
+}
 
-
-
-
-
-
-
-
-
-
-
-
+public ResponseEntity<ResponseStructure<Ticket>> cancelTicket(long ticketId) {
+   Ticket dbTicket=ticketDao.getTicketById(ticketId);
+   if(dbTicket!=null) {
+      if(dbTicket.getMoviewShow().getShowStatus().equals(ShowStatus.ON_GOING)) {
+    	  throw new TicketCannotBeCancelledEXception("Sorry failed to cancel ticket");
+      }else {
+    	  if(dbTicket.getTicketStatus().equals(TicketStatus.EXPIRED)) {
+    		  throw new TicketAlreadyExpiredException("Sorry failed to cancel ticket");
+    	
+    	  }else {
+    		  if(dbTicket.getTicketStatus().equals(TicketStatus.CANCELLED)) {
+    			  throw new TicketAlreadyCancelledException("Sorry failed to cancel ticket");
+    		  }else {
+    			  List<Booking> bookings=dbTicket.getBookings();
+    			  for(Booking b:bookings) {
+    				  b.setStatus(BookingStatus.CANCELLED);
+    				  bookingDao.saveBookig(b);
+    			  }
+    			  dbTicket.setTicketStatus(TicketStatus.CANCELLED);
+    			  ticketDao.saveTticket(dbTicket);
+    			  ResponseStructure<Ticket> structure=new ResponseStructure<Ticket>();
+    			  structure.setMessage("Ticket cancelled successfullu");
+    			  structure.setStatus(HttpStatus.FOUND.value());
+    			  structure.setData(dbTicket);
+    			  return new ResponseEntity<ResponseStructure<Ticket>>(structure,HttpStatus.FOUND);
+    		  }
+    	  }}     
+   }else {
+	   throw new TicketIdNotFoundException("Sorry failed to cancel ticket");
+   }
 }
 }

@@ -1,5 +1,7 @@
 package com.jsp.CloneAPIBookMyShow.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +25,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	@PostMapping
-	public ResponseEntity<ResponseStructure<CustomerDto>> saveCustomer(@RequestBody Customer customerDto){
+	public ResponseEntity<ResponseStructure<CustomerDto>> saveCustomer(@Valid @RequestBody Customer customerDto){
 		return service.saveCustomer(customerDto);
 	}
 	@PutMapping

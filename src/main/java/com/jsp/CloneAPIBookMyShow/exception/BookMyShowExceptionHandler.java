@@ -1,16 +1,38 @@
 package com.jsp.CloneAPIBookMyShow.exception;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.jsp.CloneAPIBookMyShow.util.ResponseStructure;
 
 @RestControllerAdvice
 public class BookMyShowExceptionHandler extends ResponseEntityExceptionHandler{
+	
 
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+       List<ObjectError> list=ex.getAllErrors();
+       Map<String, String> map=new HashMap<String, String>();
+       for(ObjectError error:list) {
+    	   String message=error.getDefaultMessage();
+    	   String fieldname=((FieldError)error).getField();
+    	   map.put(fieldname, message);
+       }
+       return new ResponseEntity<Object>(map,HttpStatus.BAD_REQUEST);
+	}
 	@ExceptionHandler
 	public ResponseEntity<ResponseStructure<String>> ownerIdNoTFound(OwnerIdNotFoundException ex){
 		ResponseStructure<String>  structure=new ResponseStructure<String>();
@@ -23,6 +45,38 @@ public class BookMyShowExceptionHandler extends ResponseEntityExceptionHandler{
 	public ResponseEntity<ResponseStructure<String>> ScreenIdNoTFound(ScreenIdNotFoundException ex){
 		ResponseStructure<String>  structure=new ResponseStructure<String>();
 		structure.setMessage("Id NOt Found for Screen");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> TicketCannotbeCancel(TicketCannotBeCancelledEXception ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Sorry Show is on going so you can't cancel a ticket now");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> TicketCannotbeCancel(TicketAlreadyCancelledException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Sorry Ticket already cancelled");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> TicketCannotbeCancel(TicketAlreadyExpiredException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Sorry Ticket already Expired");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> ticketIdNoTFound(TicketIdNotFoundException ex){
+		ResponseStructure<String>  structure=new ResponseStructure<String>();
+		structure.setMessage("Id NOt Found for Ticket");
 		structure.setStatus(HttpStatus.NOT_FOUND.value());
 		structure.setData(ex.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
