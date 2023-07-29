@@ -15,7 +15,6 @@ public class CustomerDto {
 	@Min(600000001)
 	@Max(999999999)
 	private long customerPhone;
-
 	private String customerEmail;
 	
 }
